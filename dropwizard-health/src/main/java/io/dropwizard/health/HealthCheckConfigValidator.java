@@ -34,8 +34,8 @@ class HealthCheckConfigValidator implements Managed {
 
         // find health checks that are registered but do not have a configured schedule
         // Not contained in configured health
-        final Set<String> notConfiguredHealthCheckNames = configuredHealthCheckNames.stream()
-            .filter(healthCheckName -> !registeredHealthCheckNames.contains(healthCheckName))
+        final Set<String> notConfiguredHealthCheckNames = registeredHealthCheckNames.stream()
+            .filter(healthCheckName -> !configuredHealthCheckNames.contains(healthCheckName))
             .collect(Collectors.toSet());
 
         if (!notConfiguredHealthCheckNames.isEmpty()) {

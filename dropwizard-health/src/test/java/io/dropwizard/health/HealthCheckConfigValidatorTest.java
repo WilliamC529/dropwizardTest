@@ -149,10 +149,10 @@ class HealthCheckConfigValidatorTest {
             assertThat(logEvent.getFormattedMessage())
                 .doesNotContain("  * check-1");
             // Check 3 and 2 shouldn't be in there
-            assertThat(logEvent.getFormattedMessage())
-                .contains("  * check-3");
-            assertThat(logEvent.getFormattedMessage())
-                .contains("  * check-2");            
+            assertFalse(logEvent.getFormattedMessage().doesNotContain("  * check-3"))
+            assertFalse(logEvent.getFormattedMessage().doesNotContain("  * check-2"))
+            //assertThat(logEvent.getFormattedMessage())
+            //    .contains("  * check-2");            
         }
     }
 }
