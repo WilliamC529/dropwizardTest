@@ -123,13 +123,13 @@ class HealthCheckConfigValidatorTest {
         Map<String, HealthCheckConfiguration> configMap = new HashMap<>();
         HealthCheckConfiguration check1 = new HealthCheckConfiguration();
         check1.setName("check-1");
-        configMap.put(check1.getId(), check1);
+        configMap.put(check1.getName(), check1);
         HealthCheckConfiguration check2 = new HealthCheckConfiguration();
         check2.setName("check-2");
-        configMap.put(check2.getId(), check2);
+        configMap.put(check2.getName(), check2);
         HealthCheckConfiguration check3 = new HealthCheckConfiguration();
         check3.setName("check-3");
-        configMap.put(check3.getId(), check3);
+        configMap.put(check3.getName(), check3);
         HealthCheckRegistry registry = new HealthCheckRegistry();
         registry.register("check-1", mock(HealthCheck.class));
 
