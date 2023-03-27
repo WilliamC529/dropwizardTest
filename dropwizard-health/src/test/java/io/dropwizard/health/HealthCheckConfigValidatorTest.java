@@ -18,6 +18,8 @@ import org.slf4j.MDC;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -117,16 +119,17 @@ class HealthCheckConfigValidatorTest {
     void startValidationsShouldFailIfAHealthCheckConfiguredButNotRegistered() throws Exception {
         // given
         ArgumentCaptor<LoggingEvent> captor = ArgumentCaptor.forClass(LoggingEvent.class);
-        List<HealthCheckConfiguration> configs = new ArrayList<>();
+        // Using map instead of Array list
+        Map<String, HealthCheckConfiguration> configMap = new HashMap<>();
         HealthCheckConfiguration check1 = new HealthCheckConfiguration();
         check1.setName("check-1");
-        configs.add(check1);
+        configMap.put(check1.getId(), check1);
         HealthCheckConfiguration check2 = new HealthCheckConfiguration();
         check2.setName("check-2");
-        configs.add(check2);
+        configMap.put(check2.getId(), check2);
         HealthCheckConfiguration check3 = new HealthCheckConfiguration();
         check3.setName("check-3");
-        configs.add(check3);
+        configMap.put(check3.getId(), check3);
         HealthCheckRegistry registry = new HealthCheckRegistry();
         registry.register("check-1", mock(HealthCheck.class));
 
