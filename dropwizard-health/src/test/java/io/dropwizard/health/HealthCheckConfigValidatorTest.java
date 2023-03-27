@@ -133,10 +133,7 @@ class HealthCheckConfigValidatorTest {
         HealthCheckRegistry registry = new HealthCheckRegistry();
         registry.register("check-1", mock(HealthCheck.class));
 
-        List<HealthCheckConfiguration> configs = new ArrayList<>();
-        for (configMap.Entry<String, HealthCheckConfiguration> entry : configMap.entrySet()) {
-            configs.add(entry);
-        }
+        List<HealthCheckConfiguration> configs = new ArrayList<>(configMap.values());
 
         // when
         try {
