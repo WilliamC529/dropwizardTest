@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.Collections;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
@@ -136,7 +137,8 @@ class HealthCheckConfigValidatorTest {
         // when
         try {
             // The problem is in the validator?
-            HealthCheckConfigValidator validator = new HealthCheckConfigValidator(unmodifiableList(configs.sort()), registry);
+            Collections.sort(configs);
+            HealthCheckConfigValidator validator = new HealthCheckConfigValidator(unmodifiableList(configs), registry);
             validator.start();
             fail("configured health checks that aren't registered should fail");
         } catch (IllegalStateException e) {
