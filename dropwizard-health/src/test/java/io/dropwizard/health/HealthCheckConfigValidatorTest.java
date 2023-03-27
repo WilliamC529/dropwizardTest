@@ -18,10 +18,7 @@ import org.slf4j.MDC;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
-import java.util.Collections;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
@@ -137,7 +134,6 @@ class HealthCheckConfigValidatorTest {
         // when
         try {
             // The problem is in the validator?
-            Collections.sort(configs);
             HealthCheckConfigValidator validator = new HealthCheckConfigValidator(unmodifiableList(configs), registry);
             validator.start();
             fail("configured health checks that aren't registered should fail");
@@ -145,6 +141,7 @@ class HealthCheckConfigValidatorTest {
             // then
             verify(mockLogAppender).doAppend(captor.capture());
             LoggingEvent logEvent = captor.getValue();
+            System.out.println (logEvent.getFormattedMessage());
             assertThat(logEvent.getLevel())
                 .isEqualTo(Level.ERROR);
             assertThat(logEvent.getFormattedMessage())
