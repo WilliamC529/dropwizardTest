@@ -27,13 +27,15 @@ class HealthCheckConfigValidator implements Managed {
 
     private void validateConfiguration(final List<HealthCheckConfiguration> healthCheckConfigs,
                                        final Set<String> registeredHealthCheckNames) {
+        // Added all names here
         final Set<String> configuredHealthCheckNames = healthCheckConfigs.stream()
             .map(HealthCheckConfiguration::getName)
             .collect(Collectors.toSet());
 
         // find health checks that are registered but do not have a configured schedule
-        final Set<String> notConfiguredHealthCheckNames = registeredHealthCheckNames.stream()
-            .filter(healthCheckName -> !configuredHealthCheckNames.contains(healthCheckName))
+        // Not contained in configured health
+        final Set<String> notConfiguredHealthCheckNames = configuredHealthCheckNames.stream()
+            .filter(healthCheckName -> !registeredHealthCheckNames.contains(healthCheckName))
             .collect(Collectors.toSet());
 
         if (!notConfiguredHealthCheckNames.isEmpty()) {
