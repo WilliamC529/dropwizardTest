@@ -119,25 +119,24 @@ class HealthCheckConfigValidatorTest {
     void startValidationsShouldFailIfAHealthCheckConfiguredButNotRegistered() throws Exception {
         // given
         ArgumentCaptor<LoggingEvent> captor = ArgumentCaptor.forClass(LoggingEvent.class);
-        // Using map instead of Array list
-        Map<String, HealthCheckConfiguration> configMap = new HashMap<>();
+        // Converting array list to map didn't seem to help
+        List<HealthCheckConfiguration> configs = new ArrayList<>();
         HealthCheckConfiguration check1 = new HealthCheckConfiguration();
         check1.setName("check-1");
-        configMap.put(check1.getName(), check1);
+        configs.add(check1);
         HealthCheckConfiguration check2 = new HealthCheckConfiguration();
         check2.setName("check-2");
-        configMap.put(check2.getName(), check2);
+        configs.add(check2);
         HealthCheckConfiguration check3 = new HealthCheckConfiguration();
         check3.setName("check-3");
-        configMap.put(check3.getName(), check3);
+        configs.add(check3);               
         HealthCheckRegistry registry = new HealthCheckRegistry();
         registry.register("check-1", mock(HealthCheck.class));
 
-        List<HealthCheckConfiguration> configs = new ArrayList<>(configMap.values());
-
         // when
         try {
-            HealthCheckConfigValidator validator = new HealthCheckConfigValidator(unmodifiableList(configs), registry);
+            // The problem is in the validator?
+            HealthCheckConfigValidator validator = new HealthCheckConfigValidator(unmodifiableList(configs.sort()), registry);
             validator.start();
             fail("configured health checks that aren't registered should fail");
         } catch (IllegalStateException e) {
